@@ -7,6 +7,7 @@ import '../widgets/bottom_nav.dart';
 import 'sidebar_drawer.dart';
 import 'profile_screen.dart';
 import 'jadwal_presensi_screen.dart';
+import 'presensi_kelas_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -122,11 +123,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() => _reminderActive = true);
                 }
               },
-              child: const JadwalCard(
+              child: JadwalCard(
                 namaMatkul: 'Rekayasa Perangkat Lunak',
                 jamLokasi: '08.00 - 10.00 · Gedung F - FILKOM F2.1',
                 status: 'Sedang Berlangsung',
                 isBerlangsung: true,
+                onPresensiTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PresensiKelasScreen()),
+                  );
+                },
               ),
             ),
 

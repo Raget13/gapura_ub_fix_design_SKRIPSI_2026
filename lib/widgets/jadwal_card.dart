@@ -6,6 +6,7 @@ class JadwalCard extends StatelessWidget {
   final String jamLokasi;
   final String status;
   final bool isBerlangsung;
+  final VoidCallback? onPresensiTap;
 
   const JadwalCard({
     super.key,
@@ -13,6 +14,7 @@ class JadwalCard extends StatelessWidget {
     required this.jamLokasi,
     required this.status,
     this.isBerlangsung = false,
+    this.onPresensiTap,
   });
 
   @override
@@ -82,7 +84,7 @@ class JadwalCard extends StatelessWidget {
                             ],
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: onPresensiTap,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: Colors.white,
