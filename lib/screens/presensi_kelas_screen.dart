@@ -231,7 +231,6 @@ class _PresensiKelasScreenState extends State<PresensiKelasScreen> {
           ),
           const SizedBox(height: 12),
           _buildDeadlineBanner(),
-          const SizedBox(height: 12),
         ],
       ),
     );
