@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 import '../widgets/bottom_nav.dart';
 import 'akademik_screen.dart';
+import 'riwayat_pertemuan_screen.dart';
 
 class JadwalPresensiScreen extends StatefulWidget {
   const JadwalPresensiScreen({super.key});
@@ -437,7 +438,10 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
           ),
           const Spacer(),
           TextButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const RiwayatPertemuanScreen()),
+            ),
             style: TextButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: AppColors.primary,
