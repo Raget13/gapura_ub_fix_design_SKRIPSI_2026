@@ -6,6 +6,7 @@ import '../widgets/announcement_card.dart';
 import '../widgets/bottom_nav.dart';
 import 'sidebar_drawer.dart';
 import 'profile_screen.dart';
+import 'jadwal_presensi_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -110,11 +111,19 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 14),
 
             // ===== Kartu Jadwal Hari Ini =====
-            const JadwalCard(
-              namaMatkul: 'Rekayasa Perangkat Lunak',
-              jamLokasi: '08.00 - 10.00 · Gedung F - FILKOM F2.1',
-              status: 'Sedang Berlangsung',
-              isBerlangsung: true,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const JadwalPresensiScreen()),
+                );
+              },
+              child: const JadwalCard(
+                namaMatkul: 'Rekayasa Perangkat Lunak',
+                jamLokasi: '08.00 - 10.00 · Gedung F - FILKOM F2.1',
+                status: 'Sedang Berlangsung',
+                isBerlangsung: true,
+              ),
             ),
 
             const SizedBox(height: 22),
