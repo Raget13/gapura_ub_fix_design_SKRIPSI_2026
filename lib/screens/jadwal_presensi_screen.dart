@@ -15,6 +15,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
   String _selectedSemester = 'Reguler';
   int _selectedDayIndex = 0;
   int _currentNavIndex = 1;
+  bool _reminderActive = false;
 
   final List<String> _days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
   final List<String> _semesters = ['Reguler', 'Pendek'];
@@ -23,7 +24,12 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) Navigator.pop(context, _reminderActive);
+      },
+      child: Scaffold(
       backgroundColor: isDark ? AppColors.darkBg : const Color(0xFFF3F6FB),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +59,9 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
         currentIndex: _currentNavIndex,
         onTap: (i) {
           setState(() => _currentNavIndex = i);
-          if (i == 0) Navigator.pop(context);
+          if (i == 0) Navigator.pop(context, _reminderActive);
         },
+      ),
       ),
     );
   }
@@ -78,7 +85,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
               padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
               child: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(context, _reminderActive),
               ),
             ),
             const Padding(
@@ -368,17 +375,24 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Container(
-                      width: 38,
-                      height: 38,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFD1D5DB),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: 20,
+                    GestureDetector(
+                      onTap: () => _showReminderSheet(isDark),
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: _reminderActive
+                              ? AppColors.accent
+                              : const Color(0xFFD1D5DB),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _reminderActive
+                              ? Icons.notifications_active
+                              : Icons.notifications,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ],
@@ -416,6 +430,95 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
             ),
           ),
         ],
+        ),
+      ),
+    );
+  }
+
+  void _showReminderSheet(bool isDark) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: isDark ? AppColors.darkCard : Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 36),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: AppColors.accentLight.withValues(alpha: 0.45),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.notifications_active,
+                color: AppColors.accent,
+                size: 36,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Aktifkan Pengingat?',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Sistem akan memberikan pengingat 30 menit sebelum mata kuliah dimulai. Apakah Anda bersedia mengaktifkan fitur pengingat ini?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.55,
+                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: 28),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() => _reminderActive = true);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
+                      elevation: 0,
+                    ),
+                    child: const Text('Iya',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
+                      elevation: 0,
+                    ),
+                    child: const Text('Tidak',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

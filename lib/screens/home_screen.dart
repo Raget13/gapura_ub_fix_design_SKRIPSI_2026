@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentNavIndex = 0;
+  bool _reminderActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // ===== Kartu Jadwal Hari Ini =====
             GestureDetector(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                final result = await Navigator.push<bool>(
                   context,
                   MaterialPageRoute(builder: (_) => const JadwalPresensiScreen()),
                 );
+                if (result == true && mounted) {
+                  setState(() => _reminderActive = true);
+                }
               },
               child: const JadwalCard(
                 namaMatkul: 'Rekayasa Perangkat Lunak',
@@ -125,6 +129,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 isBerlangsung: true,
               ),
             ),
+
+            if (_reminderActive) ...[
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF3DC),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.notifications_active, color: AppColors.accent, size: 20),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Pengingat RPL aktif · 30 menit sebelum kelas',
+                        style: TextStyle(
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
 
             const SizedBox(height: 22),
 
