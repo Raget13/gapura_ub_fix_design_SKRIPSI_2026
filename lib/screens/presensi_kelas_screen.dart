@@ -97,7 +97,7 @@ class _PresensiKelasScreenState extends State<PresensiKelasScreen> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.borderGrey),
+        border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -175,7 +175,7 @@ class _PresensiKelasScreenState extends State<PresensiKelasScreen> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border, width: 0.8),
+        border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.border, width: 0.8),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),

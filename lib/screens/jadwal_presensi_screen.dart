@@ -111,7 +111,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.borderGrey),
+        border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -183,7 +183,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
                 borderRadius: BorderRadius.circular(50),
                 border: isSelected
                     ? null
-                    : Border.all(color: AppColors.borderGrey),
+                    : Border.all(color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
               ),
               child: Text(
                 _days[i],
@@ -214,7 +214,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkCard : Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.border, width: 0.8),
+          border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.border, width: 0.8),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.05),
