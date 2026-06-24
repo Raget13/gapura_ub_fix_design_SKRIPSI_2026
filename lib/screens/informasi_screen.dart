@@ -86,7 +86,7 @@ class InformasiScreen extends StatelessWidget {
           bottomRight: Radius.circular(24),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 36),
+      padding: const EdgeInsets.fromLTRB(20, 50, 20, 36),
       child: const Text(
         'Informasi',
         style: TextStyle(
