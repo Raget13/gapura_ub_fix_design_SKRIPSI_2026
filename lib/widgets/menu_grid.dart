@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
+import '../screens/kartu_hasil_studi_screen.dart';
+import '../screens/kartu_rencana_studi_screen.dart';
 
 class _MenuItemData {
   final IconData icon;
@@ -38,9 +40,11 @@ class MenuGrid extends StatelessWidget {
           return InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
-              // TODO: navigasi ke layar masing-masing
-              // KHS -> index 2, KRS -> index 3 (dalam scope)
-              // Kalender, Perpustakaan -> sementara halaman placeholder (luar scope)
+              if (index == 2) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const KartuHasilStudiScreen()));
+              } else if (index == 3) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const KartuRencanaStudiScreen()));
+              }
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),

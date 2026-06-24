@@ -5,6 +5,7 @@ import '../screens/sidebar_drawer.dart';
 import 'informasi_screen.dart';
 import 'profile_screen.dart';
 import 'jadwal_presensi_screen.dart';
+import 'kartu_hasil_studi_screen.dart';
 import '../core/page_transitions.dart';
 
 class AkademikScreen extends StatelessWidget {
@@ -53,6 +54,7 @@ class AkademikScreen extends StatelessWidget {
                     isDark,
                     icon: Icons.bar_chart_rounded,
                     label: 'Hasil Studi',
+                    onTap: () => Navigator.push(context, navRoute(const KartuHasilStudiScreen())),
                   ),
                   const SizedBox(height: 12),
                   _menuItem(
