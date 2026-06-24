@@ -6,6 +6,7 @@ import 'informasi_screen.dart';
 import 'profile_screen.dart';
 import 'jadwal_presensi_screen.dart';
 import 'kartu_hasil_studi_screen.dart';
+import 'out_of_scope_screen.dart';
 import '../core/page_transitions.dart';
 
 class AkademikScreen extends StatelessWidget {
@@ -47,6 +48,7 @@ class AkademikScreen extends StatelessWidget {
                     isDark,
                     icon: Icons.payments_outlined,
                     label: 'Biaya Kuliah',
+                    onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Biaya Kuliah'))),
                   ),
                   const SizedBox(height: 12),
                   _menuItem(
@@ -142,10 +144,10 @@ class AkademikScreen extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: isDark ? const Color(0xFF1D3461) : AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, color: AppColors.primary, size: 22),
+              child: Icon(icon, color: isDark ? AppColors.darkAccentBlue : AppColors.primary, size: 22),
             ),
             const SizedBox(width: 14),
             Expanded(

@@ -4,6 +4,7 @@ import '../widgets/bottom_nav.dart';
 import '../screens/sidebar_drawer.dart';
 import 'akademik_screen.dart';
 import 'profile_screen.dart';
+import 'out_of_scope_screen.dart';
 import '../core/page_transitions.dart';
 
 class InformasiScreen extends StatelessWidget {
@@ -40,19 +41,26 @@ class InformasiScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
               child: Column(
                 children: [
-                  _menuItem(context, isDark, icon: Icons.newspaper_outlined, label: 'Berita'),
+                  _menuItem(context, isDark, icon: Icons.newspaper_outlined, label: 'Berita',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Berita')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.account_balance_outlined, label: 'Fakultas'),
+                  _menuItem(context, isDark, icon: Icons.account_balance_outlined, label: 'Fakultas',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Fakultas')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.groups_outlined, label: 'Pimpinan'),
+                  _menuItem(context, isDark, icon: Icons.groups_outlined, label: 'Pimpinan',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Pimpinan')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.apartment_outlined, label: 'Fasilitas'),
+                  _menuItem(context, isDark, icon: Icons.apartment_outlined, label: 'Fasilitas',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Fasilitas')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.bar_chart_rounded, label: 'Statistik'),
+                  _menuItem(context, isDark, icon: Icons.bar_chart_rounded, label: 'Statistik',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Statistik')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.history_edu_outlined, label: 'Sejarah'),
+                  _menuItem(context, isDark, icon: Icons.history_edu_outlined, label: 'Sejarah',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Sejarah')))),
                   const SizedBox(height: 12),
-                  _menuItem(context, isDark, icon: Icons.shield_outlined, label: 'Lambang'),
+                  _menuItem(context, isDark, icon: Icons.shield_outlined, label: 'Lambang',
+                      onTap: () => Navigator.push(context, navRoute(const OutOfScopeScreen(menuName: 'Lambang')))),
                 ],
               ),
             ),
@@ -103,8 +111,11 @@ class InformasiScreen extends StatelessWidget {
     bool isDark, {
     required IconData icon,
     required String label,
+    VoidCallback? onTap,
   }) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -128,10 +139,10 @@ class InformasiScreen extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: isDark ? const Color(0xFF1D3461) : AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, color: AppColors.primary, size: 22),
+              child: Icon(icon, color: isDark ? AppColors.darkAccentBlue : AppColors.primary, size: 22),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -156,6 +167,6 @@ class InformasiScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
