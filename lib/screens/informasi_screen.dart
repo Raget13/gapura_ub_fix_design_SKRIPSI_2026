@@ -17,20 +17,24 @@ class InformasiScreen extends StatelessWidget {
       backgroundColor: isDark ? AppColors.darkBg : const Color(0xFFF3F6FB),
       drawer: const SidebarDrawer(),
       appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
         leading: Builder(
           builder: (ctx) => IconButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.menu, color: Colors.white),
             onPressed: () => Scaffold.of(ctx).openDrawer(),
           ),
         ),
-        title: const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
         actions: [
-          IconButton(icon: const Icon(Icons.notifications_none), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.notifications_none, color: Colors.white), onPressed: () {}),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildHeader(),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
@@ -71,6 +75,22 @@ class InformasiScreen extends StatelessWidget {
     );
   }
 
+
+  Widget _buildHeader() {
+    return Container(
+      width: double.infinity,
+      color: AppColors.primary,
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+      child: const Text(
+        'Informasi',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
 
   Widget _menuItem(
     BuildContext context,
