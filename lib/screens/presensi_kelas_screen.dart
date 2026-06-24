@@ -189,9 +189,12 @@ class _PresensiKelasScreenState extends State<PresensiKelasScreen> {
         children: [
           _buildCardHeader(),
           _buildCardBody(isDark),
-          _attendanceResult == null
-              ? _buildAttendanceButtons()
-              : _buildStatusBar(),
+          if (_selectedJenis == 'Selesai')
+            _buildHasilPresensi(isDark)
+          else if (_attendanceResult == null)
+            _buildAttendanceButtons()
+          else
+            _buildStatusBar(),
         ],
       ),
     );
@@ -283,6 +286,74 @@ class _PresensiKelasScreenState extends State<PresensiKelasScreen> {
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.w500,
         ),
+      ),
+    );
+  }
+
+  // ── Hasil presensi saat jenis = Selesai ─────────────────────────────────────
+
+  Widget _buildHasilPresensi(bool isDark) {
+    final String result = _attendanceResult ?? 'TERLEWAT';
+
+    final Color statusColor;
+    final Color statusBg;
+    final IconData statusIcon;
+    final String statusLabel;
+
+    if (result.startsWith('HADIR')) {
+      statusColor = AppColors.success;
+      statusBg = AppColors.successBg;
+      statusIcon = Icons.check_circle_rounded;
+      statusLabel = result;
+    } else if (result == 'IZIN') {
+      statusColor = AppColors.warning;
+      statusBg = AppColors.warningBg;
+      statusIcon = Icons.info_rounded;
+      statusLabel = 'IZIN';
+    } else if (result == 'SAKIT') {
+      statusColor = AppColors.error;
+      statusBg = AppColors.errorBg;
+      statusIcon = Icons.local_hospital_rounded;
+      statusLabel = 'SAKIT';
+    } else {
+      statusColor = AppColors.textSecondary;
+      statusBg = isDark ? AppColors.darkElevated : AppColors.bgGrey;
+      statusIcon = Icons.cancel_rounded;
+      statusLabel = 'TERLEWAT';
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+      decoration: BoxDecoration(
+        color: statusBg,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: statusColor.withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(statusIcon, color: statusColor, size: 22),
+          const SizedBox(width: 8),
+          Text(
+            'Hasil Absensi :',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: statusColor,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            statusLabel,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w900,
+              color: statusColor,
+              letterSpacing: 1,
+            ),
+          ),
+        ],
       ),
     );
   }
