@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 import '../screens/kartu_hasil_studi_screen.dart';
 import '../screens/kartu_rencana_studi_screen.dart';
+import '../screens/out_of_scope_screen.dart';
 
 class _MenuItemData {
   final IconData icon;
@@ -40,7 +41,11 @@ class MenuGrid extends StatelessWidget {
           return InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
-              if (index == 2) {
+              if (index == 0) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const OutOfScopeScreen(menuName: 'Kalender Akademik')));
+              } else if (index == 1) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const OutOfScopeScreen(menuName: 'Layanan Perpustakaan')));
+              } else if (index == 2) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const KartuHasilStudiScreen()));
               } else if (index == 3) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const KartuRencanaStudiScreen()));
