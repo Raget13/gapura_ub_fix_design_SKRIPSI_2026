@@ -227,7 +227,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : const Color(0xFFEEF4FF),
+        color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.border, width: 0.8),
         boxShadow: [
@@ -267,7 +267,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: isDark ? AppColors.darkAccentBlue : AppColors.primary,
+              color: isDark ? AppColors.darkAccentBlue : const Color(0xFF1F2937),
             ),
           ),
           const SizedBox(height: 4),
@@ -276,7 +276,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 11,
-              color: isDark ? AppColors.darkAccentBlue : AppColors.primary,
+              color: isDark ? AppColors.bgGrey : const Color(0xFF6B7280),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -318,7 +318,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
-                fontSize: 15,
+                fontSize: 27,
               ),
             ),
           ),
