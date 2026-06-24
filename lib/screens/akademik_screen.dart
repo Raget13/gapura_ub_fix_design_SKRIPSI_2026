@@ -56,9 +56,9 @@ class AkademikScreen extends StatelessWidget {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 2) {
-            Navigator.pushReplacement(context, slideRoute(const InformasiScreen()));
+            Navigator.pushReplacement(context, navRoute(const InformasiScreen()));
           } else if (i == 3) {
-            Navigator.pushReplacement(context, slideRoute(const ProfileScreen()));
+            Navigator.pushReplacement(context, navRoute(const ProfileScreen()));
           }
         },
       ),

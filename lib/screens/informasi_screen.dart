@@ -49,9 +49,9 @@ class InformasiScreen extends StatelessWidget {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 1) {
-            Navigator.pushReplacement(context, slideRoute(const AkademikScreen(), fromLeft: true));
+            Navigator.pushReplacement(context, navRoute(const AkademikScreen()));
           } else if (i == 3) {
-            Navigator.pushReplacement(context, slideRoute(const ProfileScreen()));
+            Navigator.pushReplacement(context, navRoute(const ProfileScreen()));
           }
         },
       ),

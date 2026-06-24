@@ -198,9 +198,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 1) {
-            Navigator.pushReplacement(context, slideRoute(const AkademikScreen(), fromLeft: true));
+            Navigator.pushReplacement(context, navRoute(const AkademikScreen()));
           } else if (i == 2) {
-            Navigator.pushReplacement(context, slideRoute(const InformasiScreen(), fromLeft: true));
+            Navigator.pushReplacement(context, navRoute(const InformasiScreen()));
           }
         },
       ),

@@ -223,13 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (i) {
           setState(() => _currentNavIndex = i);
           if (i == 1) {
-            Navigator.push(context, slideRoute(const AkademikScreen()))
+            Navigator.push(context, navRoute(const AkademikScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           } else if (i == 2) {
-            Navigator.push(context, slideRoute(const InformasiScreen()))
+            Navigator.push(context, navRoute(const InformasiScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           } else if (i == 3) {
-            Navigator.push(context, slideRoute(const ProfileScreen()))
+            Navigator.push(context, navRoute(const ProfileScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           }
         },
