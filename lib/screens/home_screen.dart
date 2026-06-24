@@ -23,6 +23,42 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentNavIndex = 0;
   bool _reminderActive = false;
   bool _isNavigating = false;
+  DateTime? _reminderTime;
+
+  String _formatTime(DateTime dt) {
+    final h = dt.hour.toString().padLeft(2, '0');
+    final m = dt.minute.toString().padLeft(2, '0');
+    return '$h.$m WIB';
+  }
+
+  void _showCancelReminderDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Batalkan Pengingat?', style: TextStyle(fontWeight: FontWeight.w700)),
+        content: Text(
+          'Pengingat kelas RPL yang aktif pukul ${_formatTime(_reminderTime!)} akan dibatalkan.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Biarkan', style: TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              setState(() {
+                _reminderActive = false;
+                _reminderTime = null;
+              });
+            },
+            child: Text('Batalkan', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +68,22 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: isDark ? AppColors.darkBg : AppColors.bgWhite,
       drawer: const SidebarDrawer(),
       appBar: AppBar(
+        centerTitle: false,
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
-        title: const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/logo_gapura_ub.png', width: 32, height: 32, color: Colors.white,
+                errorBuilder: (c, e, s) => const SizedBox.shrink()),
+            const SizedBox(width: 6),
+            const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+          ],
+        ),
         actions: [
           IconButton(icon: const Icon(Icons.notifications_none), onPressed: () {}),
         ],
@@ -127,7 +172,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
                 _isNavigating = false;
                 if (result == true && mounted) {
-                  setState(() => _reminderActive = true);
+                  setState(() {
+                    _reminderActive = true;
+                    _reminderTime = DateTime.now().add(const Duration(minutes: 30));
+                  });
                 }
               },
               child: JadwalCard(
@@ -144,29 +192,33 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            if (_reminderActive) ...[
+            if (_reminderActive && _reminderTime != null) ...[
               const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF3DC),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.notifications_active, color: AppColors.accent, size: 20),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'Pengingat RPL aktif · 30 menit sebelum kelas',
-                        style: TextStyle(
-                          color: AppColors.accent,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
+              GestureDetector(
+                onTap: _showCancelReminderDialog,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF3DC),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.notifications_active, color: AppColors.accent, size: 20),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'Pengingat RPL aktif · Pukul ${_formatTime(_reminderTime!)}',
+                          style: const TextStyle(
+                            color: AppColors.accent,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      const Icon(Icons.close, color: AppColors.accent, size: 16),
+                    ],
+                  ),
                 ),
               ),
             ],

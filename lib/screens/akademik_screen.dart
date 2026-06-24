@@ -23,13 +23,22 @@ class AkademikScreen extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         elevation: 0,
+        centerTitle: false,
         leading: Builder(
           builder: (ctx) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
             onPressed: () => Scaffold.of(ctx).openDrawer(),
           ),
         ),
-        title: const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/logo_gapura_ub.png', width: 32, height: 32, color: Colors.white,
+                errorBuilder: (c, e, s) => const SizedBox.shrink()),
+            const SizedBox(width: 6),
+            const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white)),
+          ],
+        ),
         actions: [
           IconButton(icon: const Icon(Icons.notifications_none, color: Colors.white), onPressed: () {}),
         ],

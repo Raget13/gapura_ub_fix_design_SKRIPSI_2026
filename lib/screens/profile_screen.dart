@@ -53,13 +53,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: isDark ? AppColors.darkBg : Colors.white,
       drawer: const SidebarDrawer(),
       appBar: AppBar(
+        centerTitle: false,
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
-        title: const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/logo_gapura_ub.png', width: 32, height: 32, color: Colors.white,
+                errorBuilder: (c, e, s) => const SizedBox.shrink()),
+            const SizedBox(width: 6),
+            const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+          ],
+        ),
         actions: [
           IconButton(icon: const Icon(Icons.notifications_none), onPressed: () {}),
         ],
