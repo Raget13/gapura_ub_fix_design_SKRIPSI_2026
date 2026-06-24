@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
+import '../core/page_transitions.dart';
 import '../widgets/bottom_nav.dart';
+import 'informasi_screen.dart';
+import 'profile_screen.dart';
 
 class KartuRencanaStudiScreen extends StatefulWidget {
   const KartuRencanaStudiScreen({super.key});
@@ -59,7 +62,22 @@ class _KartuRencanaStudiScreenState extends State<KartuRencanaStudiScreen> {
       bottomNavigationBar: AppBottomNav(
         currentIndex: 1,
         onTap: (i) {
-          if (i == 0 || i == 1) Navigator.pop(context);
+          if (i == 1) return;
+          if (i == 0) {
+            Navigator.popUntil(context, (route) => route.isFirst);
+          } else if (i == 2) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              navRoute(const InformasiScreen()),
+              (route) => route.isFirst,
+            );
+          } else if (i == 3) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              navRoute(const ProfileScreen()),
+              (route) => route.isFirst,
+            );
+          }
         },
       ),
     );

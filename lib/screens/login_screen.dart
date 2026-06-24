@@ -61,7 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     Future.delayed(const Duration(milliseconds: 800), () {
       if (!mounted) return;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        (route) => false,
+      );
     });
   }
 
@@ -88,9 +92,10 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (authenticated && mounted) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => const HomeScreen()),
+          (route) => false,
         );
       }
     } catch (e) {

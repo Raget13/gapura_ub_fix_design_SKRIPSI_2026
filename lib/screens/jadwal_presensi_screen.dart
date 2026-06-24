@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
+import '../core/page_transitions.dart';
 import '../widgets/bottom_nav.dart';
 import 'akademik_screen.dart';
+import 'informasi_screen.dart';
+import 'profile_screen.dart';
 import 'riwayat_pertemuan_screen.dart';
 
 class JadwalPresensiScreen extends StatefulWidget {
@@ -58,8 +61,28 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
       bottomNavigationBar: AppBottomNav(
         currentIndex: _currentNavIndex,
         onTap: (i) {
-          setState(() => _currentNavIndex = i);
-          if (i == 0) Navigator.pop(context, _reminderActive);
+          if (i == _currentNavIndex) return;
+          if (i == 0) {
+            Navigator.pop(context, _reminderActive);
+          } else if (i == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              navRoute(const AkademikScreen()),
+              (route) => route.isFirst,
+            );
+          } else if (i == 2) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              navRoute(const InformasiScreen()),
+              (route) => route.isFirst,
+            );
+          } else if (i == 3) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              navRoute(const ProfileScreen()),
+              (route) => route.isFirst,
+            );
+          }
         },
       ),
       ),
@@ -203,14 +226,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
   }
 
   Widget _buildCourseCard(BuildContext context, bool isDark, String day) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const AkademikScreen()),
-        );
-      },
-      child: Container(
+    return Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkCard : Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -241,7 +257,6 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
             ),
           ],
         ),
-      ),
     );
   }
 

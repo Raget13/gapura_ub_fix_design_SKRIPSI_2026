@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentNavIndex = 0;
   bool _reminderActive = false;
+  bool _isNavigating = false;
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
             // ===== Kartu Jadwal Hari Ini =====
             GestureDetector(
               onTap: () async {
+                if (_isNavigating) return;
+                _isNavigating = true;
                 final result = await Navigator.push<bool>(
                   context,
                   MaterialPageRoute(builder: (_) => const JadwalPresensiScreen()),
                 );
+                _isNavigating = false;
                 if (result == true && mounted) {
                   setState(() => _reminderActive = true);
                 }
