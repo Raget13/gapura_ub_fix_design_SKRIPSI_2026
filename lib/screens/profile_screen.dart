@@ -6,6 +6,7 @@ import 'opening_login_screen.dart';
 import 'data_mahasiswa_screen.dart';
 import 'akademik_screen.dart';
 import 'informasi_screen.dart';
+import 'pusat_bantuan_screen.dart';
 import '../core/page_transitions.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -157,9 +158,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Pengaturan & Bantuan',
               isDark: isDark,
               children: [
-                _menuTile(Icons.manage_accounts_outlined, 'Pengaturan Akun', isDark, () {}),
-                const SizedBox(height: 10),
-                _menuTile(Icons.help_outline, 'Pusat Bantuan', isDark, () {}),
+                _menuTile(Icons.help_outline, 'Pusat Bantuan', isDark, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PusatBantuanScreen()));
+                }),
                 const SizedBox(height: 10),
                 _menuTile(Icons.language, 'Bahasa', isDark, () {}),
               ],
