@@ -6,6 +6,8 @@ import '../widgets/announcement_card.dart';
 import '../widgets/bottom_nav.dart';
 import 'sidebar_drawer.dart';
 import 'profile_screen.dart';
+import 'akademik_screen.dart';
+import 'informasi_screen.dart';
 import 'jadwal_presensi_screen.dart';
 import 'presensi_kelas_screen.dart';
 
@@ -219,7 +221,13 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _currentNavIndex,
         onTap: (i) {
           setState(() => _currentNavIndex = i);
-          if (i == 3) {
+          if (i == 1) {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const AkademikScreen()))
+                .then((_) => setState(() => _currentNavIndex = 0));
+          } else if (i == 2) {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const InformasiScreen()))
+                .then((_) => setState(() => _currentNavIndex = 0));
+          } else if (i == 3) {
             Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           }

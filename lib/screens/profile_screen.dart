@@ -4,6 +4,8 @@ import '../widgets/bottom_nav.dart';
 import 'sidebar_drawer.dart';
 import 'opening_login_screen.dart';
 import 'data_mahasiswa_screen.dart';
+import 'akademik_screen.dart';
+import 'informasi_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -191,7 +193,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       bottomNavigationBar: AppBottomNav(
         currentIndex: 3,
         onTap: (i) {
-          if (i != 3) Navigator.pop(context);
+          if (i == 3) return;
+          if (i == 0) {
+            Navigator.pop(context);
+          } else if (i == 1) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AkademikScreen()));
+          } else if (i == 2) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const InformasiScreen()));
+          }
         },
       ),
     );

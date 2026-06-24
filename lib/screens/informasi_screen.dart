@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 import '../widgets/bottom_nav.dart';
-import 'informasi_screen.dart';
+import 'akademik_screen.dart';
 import 'profile_screen.dart';
 
-class AkademikScreen extends StatelessWidget {
-  const AkademikScreen({super.key});
+class InformasiScreen extends StatelessWidget {
+  const InformasiScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +22,19 @@ class AkademikScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
               child: Column(
                 children: [
-                  _menuItem(
-                    context,
-                    isDark,
-                    icon: Icons.payments_outlined,
-                    label: 'Biaya Kuliah',
-                  ),
+                  _menuItem(context, isDark, icon: Icons.newspaper_outlined, label: 'Berita'),
                   const SizedBox(height: 12),
-                  _menuItem(
-                    context,
-                    isDark,
-                    icon: Icons.bar_chart_rounded,
-                    label: 'Hasil Studi',
-                  ),
+                  _menuItem(context, isDark, icon: Icons.account_balance_outlined, label: 'Fakultas'),
                   const SizedBox(height: 12),
-                  _menuItem(
-                    context,
-                    isDark,
-                    icon: Icons.calendar_month_outlined,
-                    label: 'Jadwal & Presensi Kelas',
-                  ),
+                  _menuItem(context, isDark, icon: Icons.groups_outlined, label: 'Pimpinan'),
+                  const SizedBox(height: 12),
+                  _menuItem(context, isDark, icon: Icons.apartment_outlined, label: 'Fasilitas'),
+                  const SizedBox(height: 12),
+                  _menuItem(context, isDark, icon: Icons.bar_chart_rounded, label: 'Statistik'),
+                  const SizedBox(height: 12),
+                  _menuItem(context, isDark, icon: Icons.history_edu_outlined, label: 'Sejarah'),
+                  const SizedBox(height: 12),
+                  _menuItem(context, isDark, icon: Icons.shield_outlined, label: 'Lambang'),
                 ],
               ),
             ),
@@ -49,13 +42,13 @@ class AkademikScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: AppBottomNav(
-        currentIndex: 1,
+        currentIndex: 2,
         onTap: (i) {
-          if (i == 1) return;
+          if (i == 2) return;
           if (i == 0) {
             Navigator.pop(context);
-          } else if (i == 2) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const InformasiScreen()));
+          } else if (i == 1) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AkademikScreen()));
           } else if (i == 3) {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
           }
@@ -89,7 +82,7 @@ class AkademikScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 4, 20, 24),
               child: Text(
-                'Akademik',
+                'Informasi',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
