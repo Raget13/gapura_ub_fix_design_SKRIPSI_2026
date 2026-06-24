@@ -8,6 +8,7 @@ import 'sidebar_drawer.dart';
 import 'profile_screen.dart';
 import 'akademik_screen.dart';
 import 'informasi_screen.dart';
+import '../core/page_transitions.dart';
 import 'jadwal_presensi_screen.dart';
 import 'presensi_kelas_screen.dart';
 
@@ -222,13 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (i) {
           setState(() => _currentNavIndex = i);
           if (i == 1) {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => const AkademikScreen()))
+            Navigator.push(context, slideRoute(const AkademikScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           } else if (i == 2) {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => const InformasiScreen()))
+            Navigator.push(context, slideRoute(const InformasiScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           } else if (i == 3) {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen()))
+            Navigator.push(context, slideRoute(const ProfileScreen()))
                 .then((_) => setState(() => _currentNavIndex = 0));
           }
         },

@@ -6,6 +6,7 @@ import 'opening_login_screen.dart';
 import 'data_mahasiswa_screen.dart';
 import 'akademik_screen.dart';
 import 'informasi_screen.dart';
+import '../core/page_transitions.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -197,9 +198,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 1) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AkademikScreen()));
+            Navigator.pushReplacement(context, slideRoute(const AkademikScreen(), fromLeft: true));
           } else if (i == 2) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const InformasiScreen()));
+            Navigator.pushReplacement(context, slideRoute(const InformasiScreen(), fromLeft: true));
           }
         },
       ),

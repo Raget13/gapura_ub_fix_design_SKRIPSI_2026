@@ -3,6 +3,7 @@ import '../core/app_colors.dart';
 import '../widgets/bottom_nav.dart';
 import 'informasi_screen.dart';
 import 'profile_screen.dart';
+import '../core/page_transitions.dart';
 
 class AkademikScreen extends StatelessWidget {
   const AkademikScreen({super.key});
@@ -55,9 +56,9 @@ class AkademikScreen extends StatelessWidget {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 2) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const InformasiScreen()));
+            Navigator.pushReplacement(context, slideRoute(const InformasiScreen()));
           } else if (i == 3) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ProfileScreen()));
+            Navigator.pushReplacement(context, slideRoute(const ProfileScreen()));
           }
         },
       ),
