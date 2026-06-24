@@ -16,8 +16,10 @@ class _DataMahasiswaDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? AppColors.darkCard : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
       child: Padding(
@@ -33,10 +35,14 @@ class _DataMahasiswaDialog extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE),
+                      color: isDark ? AppColors.darkElevated : const Color(0xFFEEEEEE),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Icon(Icons.arrow_back, size: 20, color: Colors.black87),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 20,
+                      color: isDark ? AppColors.darkTextPrimary : Colors.black87,
+                    ),
                   ),
                 ),
               ],
@@ -48,7 +54,7 @@ class _DataMahasiswaDialog extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
               decoration: BoxDecoration(
-                color: AppColors.primary,
+                color: isDark ? AppColors.darkPrimary : AppColors.primary,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: const Column(
@@ -90,9 +96,15 @@ class _DataMahasiswaDialog extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: _infoCard('Nama', 'Mochamad Bintang Tegar')),
+                  Expanded(child: _infoCard('Nama', 'Mochamad Bintang Tegar', isDark: isDark)),
                   const SizedBox(width: 12),
-                  Expanded(child: _infoCard('Angkatan', '2022', valueColor: AppColors.primary)),
+                  Expanded(
+                    child: _infoCard(
+                      'Angkatan', '2022',
+                      valueColor: isDark ? AppColors.darkAccentBlue : AppColors.primary,
+                      isDark: isDark,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -101,9 +113,15 @@ class _DataMahasiswaDialog extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: _infoCard('Status Akademik', 'Aktif', valueColor: AppColors.success)),
+                  Expanded(
+                    child: _infoCard(
+                      'Status Akademik', 'Aktif',
+                      valueColor: AppColors.success,
+                      isDark: isDark,
+                    ),
+                  ),
                   const SizedBox(width: 12),
-                  Expanded(child: _infoCard('Fakultas', 'Ilmu Komputer')),
+                  Expanded(child: _infoCard('Fakultas', 'Ilmu Komputer', isDark: isDark)),
                 ],
               ),
             ),
@@ -112,9 +130,9 @@ class _DataMahasiswaDialog extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: _infoCard('Jurusan', 'Teknik Informatika')),
+                  Expanded(child: _infoCard('Jurusan', 'Teknik Informatika', isDark: isDark)),
                   const SizedBox(width: 12),
-                  Expanded(child: _infoCard('Jenjang & Prodi', 'S1 - Teknik Informatika')),
+                  Expanded(child: _infoCard('Jenjang & Prodi', 'S1 - Teknik Informatika', isDark: isDark)),
                 ],
               ),
             ),
@@ -124,13 +142,13 @@ class _DataMahasiswaDialog extends StatelessWidget {
     );
   }
 
-  static Widget _infoCard(String label, String value, {Color? valueColor}) {
+  static Widget _infoCard(String label, String value, {Color? valueColor, bool isDark = false}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFDEECFB),
+        color: isDark ? AppColors.darkElevated : const Color(0xFFDEECFB),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFBAD6F5)),
+        border: Border.all(color: isDark ? AppColors.darkBorder : const Color(0xFFBAD6F5)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +156,10 @@ class _DataMahasiswaDialog extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 13, color: Color(0xFF6B7280)),
+            style: TextStyle(
+              fontSize: 13,
+              color: isDark ? AppColors.darkTextSecondary : const Color(0xFF6B7280),
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -147,7 +168,7 @@ class _DataMahasiswaDialog extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: valueColor ?? AppColors.textPrimary,
+              color: valueColor ?? (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
             ),
           ),
         ],
