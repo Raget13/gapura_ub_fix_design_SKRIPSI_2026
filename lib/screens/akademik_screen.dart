@@ -4,6 +4,7 @@ import '../widgets/bottom_nav.dart';
 import '../screens/sidebar_drawer.dart';
 import 'informasi_screen.dart';
 import 'profile_screen.dart';
+import 'jadwal_presensi_screen.dart';
 import '../core/page_transitions.dart';
 
 class AkademikScreen extends StatelessWidget {
@@ -59,6 +60,7 @@ class AkademikScreen extends StatelessWidget {
                     isDark,
                     icon: Icons.calendar_month_outlined,
                     label: 'Jadwal & Presensi Kelas',
+                    onTap: () => Navigator.push(context, navRoute(const JadwalPresensiScreen())),
                   ),
                 ],
               ),
@@ -93,7 +95,7 @@ class AkademikScreen extends StatelessWidget {
           bottomRight: Radius.circular(24),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 50, 20, 36),
+      padding: const EdgeInsets.fromLTRB(35, 80, 20, 20),
       child: const Text(
         'Akademik',
         style: TextStyle(
@@ -110,8 +112,11 @@ class AkademikScreen extends StatelessWidget {
     bool isDark, {
     required IconData icon,
     required String label,
+    VoidCallback? onTap,
   }) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -163,6 +168,6 @@ class AkademikScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

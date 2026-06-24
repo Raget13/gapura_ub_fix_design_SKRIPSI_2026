@@ -89,7 +89,7 @@ class _JadwalPresensiScreenState extends State<JadwalPresensiScreen> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(20, 4, 20, 24),
+              padding: EdgeInsets.fromLTRB(20, 50, 20, 24),
               child: Text(
                 'Jadwal & Presensi Kuliah',
                 style: TextStyle(
