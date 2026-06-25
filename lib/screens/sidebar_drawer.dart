@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
 import '../main.dart';
 import 'opening_login_screen.dart';
+import 'out_of_scope_screen.dart';
 
 class SidebarDrawer extends StatefulWidget {
   const SidebarDrawer({super.key});
@@ -129,7 +130,10 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
                       iconBg: isDark ? const Color(0xFF1D3461) : const Color(0xFFDDEEFF),
                       iconColor: isDark ? AppColors.darkAccentBlue : AppColors.primary,
                       isDark: isDark,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const OutOfScopeScreen(menuName: 'ID Card')));
+                      },
                     ),
                     _menuTile(
                       icon: Icons.qr_code_2,
@@ -137,7 +141,10 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
                       iconBg: isDark ? const Color(0xFF1D3461) : const Color(0xFFDDEEFF),
                       iconColor: isDark ? AppColors.darkAccentBlue : AppColors.primary,
                       isDark: isDark,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const OutOfScopeScreen(menuName: 'Kode QR')));
+                      },
                     ),
                     _menuTile(
                       icon: Icons.refresh,
@@ -145,7 +152,10 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
                       iconBg: isDark ? const Color(0xFF0F2A1A) : const Color(0xFFDCFCE7),
                       iconColor: AppColors.success,
                       isDark: isDark,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const OutOfScopeScreen(menuName: 'Cek Update Aplikasi')));
+                      },
                     ),
 
                     const SizedBox(height: 8),
