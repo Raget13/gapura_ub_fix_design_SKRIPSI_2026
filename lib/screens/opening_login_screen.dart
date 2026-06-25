@@ -57,17 +57,17 @@ class OpeningLoginScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF003B7A),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 13),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                       elevation: 0,
                     ),
                     child: const Text(
                       'MASUK SEBAGAI PENGUNJUNG',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, letterSpacing: 0.5),
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14, letterSpacing: 0.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
 
                 // Tombol Masuk dengan Akun UB
                 SizedBox(
@@ -82,13 +82,13 @@ class OpeningLoginScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF5A623),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 13),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                       elevation: 0,
                     ),
                     child: const Text(
                       'MASUK DENGAN AKUN UB',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, letterSpacing: 0.5),
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14, letterSpacing: 0.5),
                     ),
                   ),
                 ),
