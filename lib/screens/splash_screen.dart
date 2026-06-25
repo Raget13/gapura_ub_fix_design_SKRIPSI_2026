@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     TextButton(
                       onPressed: _goToOpeningLogin,
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFFE5E7EB),
+                        backgroundColor: const Color(0xFFD1D5DB),
                         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
@@ -84,9 +84,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     InkWell(
                       onTap: _nextDot,
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(22),
                       child: Container(
-                        width: 52, height: 52,
+                        width: 44, height: 44,
                         decoration: const BoxDecoration(color: Color(0xFFF5A623), shape: BoxShape.circle),
                         child: const Icon(Icons.arrow_forward, color: Colors.white),
                       ),
