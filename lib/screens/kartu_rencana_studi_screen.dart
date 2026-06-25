@@ -23,12 +23,30 @@ class _KartuRencanaStudiScreenState extends State<KartuRencanaStudiScreen> {
   ];
   final List<String> _jenisSemester = ['Reguler', 'Pendek'];
 
-  final List<Map<String, String>> _mataKuliah = [
-    {'nama': 'Rekayasa Perangkat Lunak', 'kelas': 'E', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Rekayasa Perangkat Lunak', 'kelas': 'E', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Rekayasa Perangkat Lunak', 'kelas': 'E', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Rekayasa Perangkat Lunak', 'kelas': 'E', 'sks': '4', 'kode': 'CIF61101'},
-  ];
+  final Map<String, List<Map<String, String>>> _mataKuliahBySemester = {
+    'Ganjil 2024/2025': [
+      {'nama': 'Rekayasa Perangkat Lunak', 'kelas': 'E', 'sks': '4', 'kode': 'CIF61101'},
+      {'nama': 'Kecerdasan Buatan', 'kelas': 'C', 'sks': '3', 'kode': 'CIF61203'},
+      {'nama': 'Jaringan Komputer', 'kelas': 'B', 'sks': '3', 'kode': 'CIF61305'},
+      {'nama': 'Basis Data Lanjut', 'kelas': 'A', 'sks': '3', 'kode': 'CIF61402'},
+    ],
+    'Genap 2023/2024': [
+      {'nama': 'Pemrograman Mobile', 'kelas': 'D', 'sks': '4', 'kode': 'CIF60901'},
+      {'nama': 'Sistem Operasi', 'kelas': 'B', 'sks': '3', 'kode': 'CIF60702'},
+      {'nama': 'Pemrograman Web', 'kelas': 'C', 'sks': '3', 'kode': 'CIF60803'},
+      {'nama': 'Statistika & Probabilitas', 'kelas': 'A', 'sks': '2', 'kode': 'MAT60401'},
+      {'nama': 'Etika Profesi', 'kelas': 'E', 'sks': '2', 'kode': 'CIF60501'},
+    ],
+    'Ganjil 2023/2024': [
+      {'nama': 'Algoritma & Struktur Data', 'kelas': 'C', 'sks': '4', 'kode': 'CIF50301'},
+      {'nama': 'Matematika Diskrit', 'kelas': 'B', 'sks': '3', 'kode': 'MAT50201'},
+      {'nama': 'Pemrograman Berorientasi Objek', 'kelas': 'D', 'sks': '4', 'kode': 'CIF50402'},
+      {'nama': 'Sistem Digital', 'kelas': 'A', 'sks': '3', 'kode': 'CIF50503'},
+    ],
+  };
+
+  List<Map<String, String>> get _mataKuliah =>
+      _mataKuliahBySemester[_selectedSemester] ?? [];
 
   @override
   Widget build(BuildContext context) {

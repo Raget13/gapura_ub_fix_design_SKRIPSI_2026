@@ -23,14 +23,54 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
   ];
   final List<String> _jenisSemester = ['Reguler', 'Pendek'];
 
-  final List<Map<String, String>> _mataKuliah = [
-    {'nama': 'Rekayasa Perangkat Lunak', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Bahasa Indonesia', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Pemrogaman Web', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Keamanan Informasi', 'nilai': 'B+', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Rekayasa Perangkat Lunak', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
-    {'nama': 'Bahasa Indonesia', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
-  ];
+  final Map<String, List<Map<String, String>>> _mataKuliahBySemester = {
+    'Ganjil 2024/2025': [
+      {'nama': 'Rekayasa Perangkat Lunak', 'nilai': 'A', 'sks': '4', 'kode': 'CIF61101'},
+      {'nama': 'Kecerdasan Buatan', 'nilai': 'A-', 'sks': '3', 'kode': 'CIF61203'},
+      {'nama': 'Jaringan Komputer', 'nilai': 'B+', 'sks': '3', 'kode': 'CIF61305'},
+      {'nama': 'Basis Data Lanjut', 'nilai': 'A', 'sks': '3', 'kode': 'CIF61402'},
+    ],
+    'Genap 2023/2024': [
+      {'nama': 'Pemrograman Mobile', 'nilai': 'A', 'sks': '4', 'kode': 'CIF60901'},
+      {'nama': 'Sistem Operasi', 'nilai': 'B+', 'sks': '3', 'kode': 'CIF60702'},
+      {'nama': 'Pemrograman Web', 'nilai': 'A', 'sks': '3', 'kode': 'CIF60803'},
+      {'nama': 'Statistika & Probabilitas', 'nilai': 'B', 'sks': '2', 'kode': 'MAT60401'},
+      {'nama': 'Etika Profesi', 'nilai': 'A', 'sks': '2', 'kode': 'CIF60501'},
+    ],
+    'Ganjil 2023/2024': [
+      {'nama': 'Algoritma & Struktur Data', 'nilai': 'A', 'sks': '4', 'kode': 'CIF50301'},
+      {'nama': 'Matematika Diskrit', 'nilai': 'B+', 'sks': '3', 'kode': 'MAT50201'},
+      {'nama': 'Pemrograman Berorientasi Objek', 'nilai': 'A', 'sks': '4', 'kode': 'CIF50402'},
+      {'nama': 'Sistem Digital', 'nilai': 'B', 'sks': '3', 'kode': 'CIF50503'},
+    ],
+  };
+
+  final Map<String, Map<String, String>> _summaryBySemester = {
+    'Ganjil 2024/2025': {
+      'ipLulus': '3.73', 'ipBeban': '3.73',
+      'ipkLulus': '3.75', 'ipkBeban': '3.75',
+      'sksLulus': '13', 'sksBeban': '13',
+      'skskLulus': '89', 'skskBeban': '89',
+    },
+    'Genap 2023/2024': {
+      'ipLulus': '3.68', 'ipBeban': '3.68',
+      'ipkLulus': '3.71', 'ipkBeban': '3.71',
+      'sksLulus': '14', 'sksBeban': '14',
+      'skskLulus': '76', 'skskBeban': '76',
+    },
+    'Ganjil 2023/2024': {
+      'ipLulus': '3.62', 'ipBeban': '3.62',
+      'ipkLulus': '3.65', 'ipkBeban': '3.65',
+      'sksLulus': '14', 'sksBeban': '14',
+      'skskLulus': '62', 'skskBeban': '62',
+    },
+  };
+
+  List<Map<String, String>> get _mataKuliah =>
+      _mataKuliahBySemester[_selectedSemester] ?? [];
+
+  Map<String, String> get _summary =>
+      _summaryBySemester[_selectedSemester] ?? {};
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +90,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
                 children: [
                   _buildFilterCard(isDark),
                   const SizedBox(height: 16),
-                  _buildSummaryCard(isDark),
+                  _buildSummaryCard(isDark, _summary),
                   const SizedBox(height: 16),
                   ..._mataKuliah.map((mk) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
@@ -223,7 +263,7 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
     );
   }
 
-  Widget _buildSummaryCard(bool isDark) {
+  Widget _buildSummaryCard(bool isDark, Map<String, String> summary) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
@@ -242,15 +282,15 @@ class _KartuHasilStudiScreenState extends State<KartuHasilStudiScreen> {
         children: [
           Row(
             children: [
-              _buildStatItem(isDark, value: '3.73 / 3.73', label: 'IP Lulus/Beban'),
-              _buildStatItem(isDark, value: '3.75 / 3.75', label: 'IP Kumulatif Lulus/Beban'),
+              _buildStatItem(isDark, value: '${summary['ipLulus']} / ${summary['ipBeban']}', label: 'IP Lulus/Beban'),
+              _buildStatItem(isDark, value: '${summary['ipkLulus']} / ${summary['ipkBeban']}', label: 'IP Kumulatif Lulus/Beban'),
             ],
           ),
           const SizedBox(height: 20),
           Row(
             children: [
-              _buildStatItem(isDark, value: '22 / 22', label: 'SKS Lulus/Beban'),
-              _buildStatItem(isDark, value: '89 / 89', label: 'SKS Kumulatif Lulus/Beban'),
+              _buildStatItem(isDark, value: '${summary['sksLulus']} / ${summary['sksBeban']}', label: 'SKS Lulus/Beban'),
+              _buildStatItem(isDark, value: '${summary['skskLulus']} / ${summary['skskBeban']}', label: 'SKS Kumulatif Lulus/Beban'),
             ],
           ),
         ],
