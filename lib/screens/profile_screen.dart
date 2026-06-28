@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/app_colors.dart';
+import '../core/app_strings.dart';
+import '../main.dart';
 import '../widgets/bottom_nav.dart';
 import 'sidebar_drawer.dart';
 import 'opening_login_screen.dart';
@@ -22,12 +24,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Konfirmasi Keluar', style: TextStyle(fontWeight: FontWeight.w700)),
-        content: const Text('Apakah Anda yakin ingin keluar dari akun?'),
+        title: Text(AppStrings.get(context, 'logout_confirm'),
+            style: const TextStyle(fontWeight: FontWeight.w700)),
+        content: Text(AppStrings.get(context, 'logout_message')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Batal'),
+            child: Text(AppStrings.get(context, 'cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -38,9 +41,126 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 (route) => false,
               );
             },
-            child: const Text('Keluar', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w700)),
+            child: Text(AppStrings.get(context, 'logout'),
+                style: const TextStyle(
+                    color: AppColors.error, fontWeight: FontWeight.w700)),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showLanguagePicker() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        return ValueListenableBuilder<Locale>(
+          valueListenable: localeNotifier,
+          builder: (context, currentLocale, _) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 36),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: isDark ? AppColors.darkBorder : AppColors.borderGrey,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    AppStrings.get(context, 'choose_language'),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  _languageOption(
+                    ctx: ctx,
+                    isDark: isDark,
+                    flag: '🇮🇩',
+                    label: AppStrings.get(context, 'indonesian'),
+                    locale: const Locale('id'),
+                    selected: currentLocale.languageCode == 'id',
+                  ),
+                  const SizedBox(height: 10),
+                  _languageOption(
+                    ctx: ctx,
+                    isDark: isDark,
+                    flag: '🇬🇧',
+                    label: AppStrings.get(context, 'english'),
+                    locale: const Locale('en'),
+                    selected: currentLocale.languageCode == 'en',
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _languageOption({
+    required BuildContext ctx,
+    required bool isDark,
+    required String flag,
+    required String label,
+    required Locale locale,
+    required bool selected,
+  }) {
+    return InkWell(
+      onTap: () {
+        localeNotifier.value = locale;
+        Navigator.pop(ctx);
+      },
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: selected
+              ? AppColors.primary.withOpacity(0.08)
+              : (isDark ? AppColors.darkCard : Colors.white),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: selected
+                ? AppColors.primary
+                : (isDark ? AppColors.darkBorder : AppColors.borderGrey),
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(flag, style: const TextStyle(fontSize: 22)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: selected
+                      ? AppColors.primary
+                      : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
+                ),
+              ),
+            ),
+            if (selected)
+              Icon(Icons.check_circle, color: AppColors.primary, size: 20),
+          ],
+        ),
       ),
     );
   }
@@ -48,6 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final s = (String key) => AppStrings.get(context, key);
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBg : Colors.white,
@@ -63,10 +184,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset('assets/images/logo_gapura_ub.png', width: 32, height: 32, color: Colors.white,
-                errorBuilder: (c, e, s) => const SizedBox.shrink()),
+            Image.asset('assets/images/logo_gapura_ub.png',
+                width: 32,
+                height: 32,
+                color: Colors.white,
+                errorBuilder: (c, e, st) => const SizedBox.shrink()),
             const SizedBox(width: 6),
-            const Text('Gapura UB', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+            Text(s('app_name'),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
           ],
         ),
         actions: [
@@ -76,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // ===== Header biru — avatar + nama di dalam container =====
+            // ===== Header biru =====
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -89,47 +215,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-
-                  // Avatar
                   Container(
-                    width: 110, height: 110,
+                    width: 110,
+                    height: 110,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.primaryLight,
-                      border: Border.all(color: Colors.white.withOpacity(0.4), width: 4),
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.4), width: 4),
                     ),
-                    child: const Icon(Icons.person, size: 64, color: Colors.white),
+                    child:
+                        const Icon(Icons.person, size: 64, color: Colors.white),
                   ),
-
                   const SizedBox(height: 14),
-
-                  // Nama
-                  const Text('Nama Mahasiswa',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white)),
+                  Text(s('student_name'),
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white)),
                   const SizedBox(height: 4),
                   const Text('22518383837',
                       style: TextStyle(fontSize: 14, color: Color(0xFFBFDBFE))),
                   const SizedBox(height: 14),
-
-                  // Badge
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.3)),
+                      border:
+                          Border.all(color: Colors.white.withOpacity(0.3)),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.check_circle, size: 16, color: Color(0xFFFFF3DC)),
-                        SizedBox(width: 6),
-                        Text('Mahasiswa UB',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white)),
+                        const Icon(Icons.check_circle,
+                            size: 16, color: Color(0xFFFFF3DC)),
+                        const SizedBox(width: 6),
+                        Text(s('student_ub'),
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white)),
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 28),
                 ],
               ),
@@ -142,9 +272,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  Expanded(child: _statCard('IPK TERAKHIR', '3.85', isDark)),
+                  Expanded(child: _statCard(s('last_gpa'), '3.85', isDark)),
                   const SizedBox(width: 14),
-                  Expanded(child: _statCard('SKS TOTAL', '124', isDark)),
+                  Expanded(child: _statCard(s('total_sks'), '124', isDark)),
                 ],
               ),
             ),
@@ -153,10 +283,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // ===== Informasi Akademik =====
             _sectionBlock(
-              title: 'Informasi Akademik',
+              title: s('academic_info'),
               isDark: isDark,
               children: [
-                _menuTile(Icons.badge_outlined, 'Data Mahasiswa', isDark, () {
+                _menuTile(Icons.badge_outlined, s('student_data'), isDark, () {
                   DataMahasiswaScreen.showOverlay(context);
                 }),
               ],
@@ -164,14 +294,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // ===== Pengaturan & Bantuan =====
             _sectionBlock(
-              title: 'Pengaturan & Bantuan',
+              title: s('settings_help'),
               isDark: isDark,
               children: [
-                _menuTile(Icons.help_outline, 'Pusat Bantuan', isDark, () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PusatBantuanScreen()));
+                _menuTile(Icons.help_outline, s('help_center'), isDark, () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const PusatBantuanScreen()));
                 }),
                 const SizedBox(height: 10),
-                _menuTile(Icons.language, 'Bahasa', isDark, () {}),
+                _menuTile(Icons.language, s('language'), isDark,
+                    _showLanguagePicker),
               ],
             ),
 
@@ -185,12 +319,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ElevatedButton.icon(
                   onPressed: _handleLogout,
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text('Keluar', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                  label: Text(s('logout'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 16)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accent,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
                     elevation: 0,
                   ),
                 ),
@@ -208,9 +345,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (i == 0) {
             Navigator.pop(context);
           } else if (i == 1) {
-            Navigator.pushReplacement(context, navRoute(const AkademikScreen()));
+            Navigator.pushReplacement(
+                context, navRoute(const AkademikScreen()));
           } else if (i == 2) {
-            Navigator.pushReplacement(context, navRoute(const InformasiScreen()));
+            Navigator.pushReplacement(
+                context, navRoute(const InformasiScreen()));
           }
         },
       ),
@@ -223,30 +362,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
+        border: Border.all(
+            color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
       ),
       child: Column(
         children: [
           Text(label,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.3,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
                   color: isDark ? AppColors.darkTextMuted : AppColors.textMuted)),
           const SizedBox(height: 6),
           Text(value,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800,
-                  color: isDark ? AppColors.darkAccentBlue : AppColors.primary)),
+              style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w800,
+                  color: isDark
+                      ? AppColors.darkAccentBlue
+                      : AppColors.primary)),
         ],
       ),
     );
   }
 
-  Widget _sectionBlock({required String title, required bool isDark, required List<Widget> children}) {
+  Widget _sectionBlock(
+      {required String title,
+      required bool isDark,
+      required List<Widget> children}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title.toUpperCase(),
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 0.4,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.4,
                   color: isDark ? AppColors.darkTextMuted : AppColors.textMuted)),
           const SizedBox(height: 10),
           ...children,
@@ -255,7 +408,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _menuTile(IconData icon, String label, bool isDark, VoidCallback onTap) {
+  Widget _menuTile(
+      IconData icon, String label, bool isDark, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(14),
@@ -264,18 +418,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkCard : Colors.white,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
+          border: Border.all(
+              color: isDark ? AppColors.darkBorder : AppColors.borderGrey),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 22, color: isDark ? AppColors.darkAccentBlue : AppColors.primary),
+            Icon(icon,
+                size: 22,
+                color: isDark ? AppColors.darkAccentBlue : AppColors.primary),
             const SizedBox(width: 14),
             Expanded(
               child: Text(label,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,
-                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary)),
             ),
-            Icon(Icons.chevron_right, color: isDark ? AppColors.darkTextMuted : AppColors.textMuted),
+            Icon(Icons.chevron_right,
+                color: isDark ? AppColors.darkTextMuted : AppColors.textMuted),
           ],
         ),
       ),
